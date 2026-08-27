@@ -2,25 +2,17 @@ public class Main {
 
     public static void main(String[] args){
 
-        ContaBancaria c1 = new ContaBancaria();
-        c1.titular = "Carlos Magno";
-        c1.saldo = 100;
+        Titular titular1 = new Titular("Pedro Alvarez Cabral", "12345", null);
+        ContaBancaria c1 = new ContaBancaria(titular1, 500);
 
-        ContaBancaria c2 = new ContaBancaria();
-        c2.titular = "Rodrigo";
-        c2.saldo = 1000;
+        c1.depositar(500.0);
+        c1.depositar(-50.0);
+        c1.sacar(100.0);
+        c1.aplicarRendimento(10.0);
+        c1.aplicarRendimento(150.0);
 
-        c1.Exibir();
-        c2.Exibir();
+        c1.exibirSaldo();
 
-        c1.sacar(10);
-        c2.depositar(100);
-
-        c1.Exibir();
-        c2.Exibir();
-
-
-
-
+        System.out.println(c1.titular.nome);
     }
 }
