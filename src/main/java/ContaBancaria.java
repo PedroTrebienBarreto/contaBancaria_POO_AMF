@@ -2,14 +2,19 @@ import java.util.ArrayList;
 
 public class ContaBancaria {
 
-
+    private Integer id;
     private Titular titular;
     private double saldo;
     private ArrayList<Double> movimentacoes = new ArrayList<>();
 
-    ContaBancaria(Titular titular) {
+    ContaBancaria(Titular titular, Integer id) {
         this.titular = titular;
         this.saldo = 0;
+        this.id = id;
+    }
+
+    public ContaBancaria() {
+
     }
 
     void exibirExtrato() {
@@ -30,7 +35,7 @@ public class ContaBancaria {
     }
 
     void mostrarMaiorSaque() {
-        Double maiorSaque = movimentacoes.get(0);
+        Double maiorSaque = movimentacoes.getFirst();
 
         for(Double mov : movimentacoes) {
             if(mov < maiorSaque) {
@@ -75,5 +80,24 @@ public class ContaBancaria {
     void exibirSaldo() {
         System.out.println("Conta de " + titular.getNome() + ": R$ " + saldo
                 + " em " + movimentacoes.size() + " transações");
+    }
+
+    protected void setTitular(Titular titular){
+        this.titular = titular;
+    }
+
+    protected void setId(Integer id){
+        this.id = id;
+    }
+
+    protected Titular getTitular(){
+        return this.titular;
+    }
+    protected Integer getId(){
+        return this.id;
+    }
+
+    protected Double getSaldo(){
+        return this.saldo;
     }
 }

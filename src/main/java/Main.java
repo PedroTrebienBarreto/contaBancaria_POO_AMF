@@ -1,14 +1,16 @@
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        Titular titular1 = new Titular("João Pascal", "12345", null);
-        ContaBancaria c1 = new ContaBancaria(titular1);
+        Banco bb = new Banco();
 
-        c1.depositar(500.0);
-        c1.sacar(100.0);
-        c1.aplicarRendimento(10.0);
+        bb.criarConta("Pedro", "123456", "22/03/2000");
 
-        c1.exibirSaldo();
+        bb.buscarConta(1);
+
+        bb.depositar(1500, 1);
+
+        bb.mostrarSaldo(1);
+
     }
 }
