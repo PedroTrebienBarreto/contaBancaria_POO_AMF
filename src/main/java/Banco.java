@@ -26,7 +26,6 @@ public class Banco {
     public ContaBancaria buscarConta(Integer id){
         for (ContaBancaria conta : contas){
             if (conta.getId().equals(id)){
-                System.out.println("Conta Encontrada!");
                 return conta;
             }
         }
@@ -34,7 +33,7 @@ public class Banco {
         return null;
     }
 
-    public void depositar(Integer valor, Integer id) {
+    public void depositar(Double valor, Integer id) {
         if (valor <= 0) {
             System.out.println("A quantidade a ser deposita deve ser maior do que R$0");
             return;
@@ -44,45 +43,57 @@ public class Banco {
         }
     }
 
-    public void sacar(Integer valor, Integer id){
+    public void sacar(Double valor, Integer id){
         ContaBancaria conta = buscarConta(id);
+        if (conta == null){
+            return;
+        }
         if (conta.getSaldo() < valor){
             System.out.println("Saldo insuficiente para saque");
-            return;
         } else {
             conta.sacar(valor);
-            return;
         }
     }
 
     public void aplicarRendimento(Integer percentual, Integer id){
-        ContaBancaria conta = buscarConta(id);
+        ContaPoupanca conta = (ContaPoupanca) buscarConta(id);
         conta.aplicarRendimento(percentual);
-        return;
     }
 
     public void mostrarSaldo(Integer id){
         ContaBancaria conta = buscarConta(id);
         conta.exibirSaldo();
-        return;
     }
 
     public void mostrarExtrato(Integer id){
         ContaBancaria conta = buscarConta(id);
         conta.exibirExtrato();
-        return;
     }
 
     public void mostrarTotalDepositado(Integer id){
         ContaBancaria conta = buscarConta(id);
         conta.mostrarTotalDepositado();
-        return;
     }
 
     public void mostrarMaiorSaque(Integer id){
         ContaBancaria conta = buscarConta(id);
         conta.mostrarMaiorSaque();
-        return;
+    }
+
+    public void mostrarContas(){
+        for (ContaBancaria conta : contas){
+            System.out.println("Conta número: "+conta.getId());
+            System.out.println("Titular da conta: "+conta.getTitular());
+        }
+    }
+
+    public void transferir(Integer origem, Integer destino, Double valor){
+        ContaBancaria contaOrigem = buscarConta(origem);
+        ContaBancaria contaDestino = buscarConta(destino);
+        if (contaOrigem!=null && contaDestino!=null){
+            contaOrigem.transferirOrigem(valor);
+            contaDestino.transferirDestino(valor);
+        }
     }
 
 }

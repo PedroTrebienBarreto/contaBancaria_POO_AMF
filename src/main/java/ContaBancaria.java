@@ -4,8 +4,8 @@ public class ContaBancaria {
 
     private Integer id;
     private Titular titular;
-    private double saldo;
-    private ArrayList<Double> movimentacoes = new ArrayList<>();
+    protected double saldo;
+    protected ArrayList<Double> movimentacoes = new ArrayList<>();
 
     ContaBancaria(Titular titular, Integer id) {
         this.titular = titular;
@@ -13,17 +13,21 @@ public class ContaBancaria {
         this.id = id;
     }
 
+    ContaBancaria(Titular titular){
+
+    }
+
     public ContaBancaria() {
 
     }
 
-    void exibirExtrato() {
+    protected void exibirExtrato() {
         for(Double mov : movimentacoes) {
             System.out.println("\nMovimentacao: " + mov);
         }
     }
 
-    void mostrarTotalDepositado() {
+    protected void mostrarTotalDepositado() {
         Double valorTotal = 0.00;
         for(Double mov : movimentacoes) {
             if (mov > 0) {
@@ -34,7 +38,7 @@ public class ContaBancaria {
         System.out.println("Total Depositado: " + valorTotal);
     }
 
-    void mostrarMaiorSaque() {
+    protected void mostrarMaiorSaque() {
         Double maiorSaque = movimentacoes.getFirst();
 
         for(Double mov : movimentacoes) {
@@ -46,7 +50,7 @@ public class ContaBancaria {
         System.out.println("Maior Saque: " + maiorSaque);
     }
 
-    void depositar(double valor) {
+    protected void depositar(double valor) {
         if (valor <= 0) {
             System.out.println("Depósito inválido na conta de " + titular.getNome() + ": R$ " + valor);
         } else {
@@ -57,30 +61,29 @@ public class ContaBancaria {
     }
 
     void sacar(double valor) {
-        double custo = valor + 0.50;
-        if (custo > saldo) {
-            System.out.println("Saldo insuficiente na conta de " + titular.getNome()
-                    + ": saque R$ " + valor + " mais tarifa, saldo R$ " + saldo);
+        if (valor > saldo) {
+            System.out.println("Saldo insuficiente na conta de " + titular.getNome());
         } else {
-            saldo = saldo - custo;
+            saldo = saldo - valor;
             movimentacoes.add(valor * -1);
             System.out.println("Saque de R$ " + valor + " (tarifa R$ 0.5) na conta de " + titular.getNome());
         }
     }
 
-    void aplicarRendimento(double percentual) {
-        if (percentual < 0 || percentual > 100) {
-            System.out.println("Percentual inválido: " + percentual);
-        } else {
-            saldo = saldo + saldo * percentual / 100;
-            System.out.println("Rendimento de " + percentual + "% na conta de " + titular.getNome());
-        }
-    }
-
-    void exibirSaldo() {
+    protected void exibirSaldo() {
         System.out.println("Conta de " + titular.getNome() + ": R$ " + saldo
                 + " em " + movimentacoes.size() + " transações");
     }
+
+    protected void transferirOrigem(Double valor){
+        this.saldo -= valor;
+        movimentacoes.add(valor * -1);
+    }
+    protected void transferirDestino(Double valor){
+        this.saldo+=valor;
+        movimentacoes.add(valor);
+    }
+
 
     protected void setTitular(Titular titular){
         this.titular = titular;
